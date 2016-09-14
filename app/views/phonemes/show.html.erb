@@ -3,7 +3,7 @@
 <ul>
 	<% @phoneme.languages.each do |language| %>
 		<li>
-			<%= language.name_and_source %>
+			<%= link_to language.name_and_source, language_path(language) %>
 		</li>
 	<% end %>
 </ul>
