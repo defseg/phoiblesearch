@@ -11,26 +11,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160811151904) do
+ActiveRecord::Schema.define(version: 20160914014646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "inventories", force: :cascade do |t|
-    t.integer "inventory_id",           null: false
-    t.string  "source",                 null: false
-    t.string  "language_code",          null: false
-    t.string  "language_name",          null: false
-    t.integer "trump",                  null: false
-    t.integer "glyph_id",               null: false
-    t.string  "phoneme",                null: false
-    t.string  "klass",                  null: false
-    t.string  "combined_klass",         null: false
-    t.integer "num_of_combined_glyphs", null: false
+  create_table "language_phonemes", force: :cascade do |t|
+    t.integer "language_id", null: false
+    t.integer "phoneme_id",  null: false
   end
 
-  add_index "inventories", ["language_name"], name: "index_inventories_on_language_name", using: :btree
-  add_index "inventories", ["phoneme"], name: "index_inventories_on_phoneme", using: :btree
+  add_index "language_phonemes", ["language_id", "phoneme_id"], name: "index_language_phonemes_on_language_id_and_phoneme_id", unique: true, using: :btree
+
+  create_table "languages", force: :cascade do |t|
+    t.string  "inventory_id",  null: false
+    t.string  "source",        null: false
+    t.string  "language_code", null: false
+    t.string  "language_name", null: false
+    t.integer "trump",         null: false
+  end
+
+  create_table "phonemes", force: :cascade do |t|
+    t.string "phoneme",                null: false
+    t.string "klass",                  null: false
+    t.string "combined_klass",         null: false
+    t.string "num_of_combined_glyphs", null: false
+  end
+
+  add_index "phonemes", ["phoneme"], name: "index_phonemes_on_phoneme", unique: true, using: :btree
 
   create_table "segments", force: :cascade do |t|
     t.string "segment"
@@ -73,4 +81,6 @@ ActiveRecord::Schema.define(version: 20160811151904) do
     t.string "click"
   end
 
+  add_foreign_key "language_phonemes", "languages"
+  add_foreign_key "language_phonemes", "phonemes"
 end
