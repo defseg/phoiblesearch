@@ -1,3 +1,4 @@
+# TODO: update this to add canonical names
 require "./scripts/tsv.rb"
 
 class Hash
