@@ -11,7 +11,8 @@ class LanguagesController < ApplicationController
 		@tones      = @language.phonemes.where(klass: "tone")
 	end
 
-	def by_name
-
+	def by_code
+		@languages = Language.where(language_code: params[:language_code])
+		@code = params[:language_code]
 	end
 end

@@ -21,3 +21,23 @@
 
 en:
   hello: "Hello world"
+  i18n:
+    transliterate:
+      rule:
+        ɛ: 'e'
+        ɔ: 'o'
+        ẹ: 'e'
+        ọ: 'o'
+        ː: ''
+        ɩ: 'i'
+        ɨ: 'i'
+        ỹ: 'y'
+        ỹ: 'y'
+        ʋ: 'w'
+        β: 'b'
+        ɗ: 'd'
+        ɘ: 'e'
+        ̩: ''
+        ̀: ''
+        ́: ''
+        ̃: ''

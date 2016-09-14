@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914014646) do
+ActiveRecord::Schema.define(version: 20160914075742) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,11 +24,12 @@ ActiveRecord::Schema.define(version: 20160914014646) do
   add_index "language_phonemes", ["language_id", "phoneme_id"], name: "index_language_phonemes_on_language_id_and_phoneme_id", unique: true, using: :btree
 
   create_table "languages", force: :cascade do |t|
-    t.string  "inventory_id",  null: false
-    t.string  "source",        null: false
-    t.string  "language_code", null: false
-    t.string  "language_name", null: false
-    t.integer "trump",         null: false
+    t.string  "inventory_id",   null: false
+    t.string  "source",         null: false
+    t.string  "language_code",  null: false
+    t.string  "language_name",  null: false
+    t.integer "trump",          null: false
+    t.string  "canonical_name"
   end
 
   create_table "phonemes", force: :cascade do |t|

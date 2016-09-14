@@ -1,0 +1,8 @@
+There are <%= @languages.count %> records for <%= @code %>:
+<ul>
+  <% @languages.each do |language| %>
+    <li>
+      <%= language.name_and_source %>
+    </li>
+  <% end %>
+</ul>
