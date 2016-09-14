@@ -1,0 +1,9 @@
+There are <%= @phonemes.count %> segments.
+
+<ul>
+	<% @phonemes.each do |phoneme| %>
+		<li>
+			<%= phoneme.phoneme %> 
+		</li>
+	<% end %>
+</ul>

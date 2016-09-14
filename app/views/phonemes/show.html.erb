@@ -1,0 +1,9 @@
+<%= @phoneme.phoneme %> appears in <%= @phoneme.languages.count %> languages:
+
+<ul>
+	<% @phoneme.languages.each do |language| %>
+		<li>
+			<%= language.name_and_source %>
+		</li>
+	<% end %>
+</ul>
