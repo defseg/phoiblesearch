@@ -1,0 +1,22 @@
+<p><%= @language.language_name %> (<%= @language.language_code %>)</p>
+<p>Source: <%= @language.source %></p>
+<p>
+	Consonants: <%= @language.consonants.count %>
+	<ul>
+		<% @consonants.each do |consonant| %>
+			<li><%= consonant %></li>
+		<% end %> 
+	</ul>
+	Vowels: <%= @vowels.count %>
+	<ul>
+		<% @vowels.each do |vowel| %>
+			<li><%= vowel %></li>
+		<% end %>
+	</ul>
+	Tones: <%= @tones.count %>
+	<ul>
+		<% @tones.each do |tone| %>
+			<li><%= tone %></li>
+		<% end %>
+	</ul>
+</p>

@@ -1,0 +1,21 @@
+There are <%= @language_count %> languages in the database.
+<table>
+  <tr>
+    <th>Language Code</th>
+    <th>Language Name</th>
+    <th>Source</th>
+  </tr>
+  <% @languages.each do |language| %>
+    <tr>
+      <td>
+        <%= language.language_code %>
+      </td>
+      <td>
+        <%= language.language_name %>
+      </td>
+      <td>
+        <%= language.source %>
+      </td>
+    </tr>
+  <% end %>
+</table>
