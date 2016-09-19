@@ -3,19 +3,19 @@
 	Consonants: <%= @consonants.count %>
 	<ul>
 		<% @consonants.each do |consonant| %>
-			<li><%= consonant.phoneme %></li>
+			<li><%= link_to consonant.phoneme, phoneme_url(consonant) %></li>
 		<% end %> 
 	</ul>
 	Vowels: <%= @vowels.count %>
 	<ul>
 		<% @vowels.each do |vowel| %>
-			<li><%= vowel.phoneme %></li>
+			<li><%= link_to vowel.phoneme, phoneme_url(vowel) %></li>
 		<% end %>
 	</ul>
 	Tones: <%= @tones.count %>
 	<ul>
 		<% @tones.each do |tone| %>
-			<li><%= tone.phoneme %></li>
+			<li><%= link_to tone.phoneme, phoneme_url(tone) %></li>
 		<% end %>
 	</ul>
 </p>

@@ -1,0 +1,31 @@
+<p>
+	Your search: <%= @search %>
+</p>
+<p>
+	Languages:
+	<table>
+		<tr>
+			<th>Language name</th>
+			<th>Language code</th>
+			<th>Phonemes</th>
+		</tr>
+		<% @languages_keys.each do |language| %>
+			<tr>
+				<td><%= link_to language.name_and_source, language_url(language) %></td>
+				<td><%= language.language_code %></td>
+				<td>
+					<% @languages[language].each do |segment| %>
+						<%= segment.segment %>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	</table>
+</p>
+
+<p>
+	Phonemes:
+	<% @segments.each do |segment| %>
+  		<%= segment.segment %>
+	<% end %>
+</p>
