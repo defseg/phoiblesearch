@@ -2,9 +2,9 @@
 <%= form_tag({controller: "phonemes", action: "search"}, method: "get") do %>
   <p>
   	Find languages that
-  	<%= select_tag :contains,  options_for_select([['do contain', true], ['do not contain', false]], true) %>
-  	<%= select_tag :number,    options_for_select([['any', -1]].concat((1..10).map{|i|[i,i]}), -1) %>
-  	<%= select_tag :number_or, options_for_select([['number of', 0], ['or less', -1], ['or more', 1]], 0) %>
+  	<%= select_tag :contains,  options_for_select([['do contain', nil], ['do not contain', 'donotcontain']], nil) %>
+  	<%= select_tag :number,    options_for_select([['any', nil]].concat((1..10).map{|i|[i,i]}), nil) %>
+  	<%= select_tag :number_or, options_for_select([['number of', nil], ['or less', '<='], ['or more', '>=']], nil) %>
   </p>
   <p>
  		segments with the following criteria:
@@ -50,7 +50,7 @@
 <% end %>
 
 <p>
-  Note that there are ten segments associated with languages in PHOIBLE's database for which PHOIBLE doesn't provide a feature set. Four of these have been manually corrected: in the feature-set listings, <em>ã̟ĩ</em>, <em>mːʷˠ</em>, <em>pːʷˠ</em>, and <em>ŋːʷ</em> have been changed to <em>ã̟ĩ</em>, <em>mʷˠː</em>, <em>pʷˠː</em>, and <em>ŋʷː</em>, to match the equivalent segments listed for languages. These segments appear in, respectively: KIOWA (UPSID); Satawalese (PH); Satawalese (PH); and Panamint (PH). The six others, which are currently unsearchable, are: <i>ˀnʘ</em>, <i>ˀnǁ</em>, <i>ˀnǀ</em>, <i>ˀnǃ</em>, and <i>ˀnǂ</em>, all of which appear only in !Xóõ (GM), and <em>N</em>, which appears in Ika (SAPHON), Asháninka (SAPHON), Caquinte (SAPHON), Nanti (SAPHON), Ashéninka (Ucayali-Yurúa dialect) (SAPHON), Ashéninka (Apurucayali dialect) (SAPHON), Ashéninka (Pichis dialect) (SAPHON), Matsigenka (SAPHON), Nomatsigenga (SAPHON), and Ashéninka (Perené dialect) (SAPHON).
+  Note that there are ten segments associated with languages in PHOIBLE's database for which PHOIBLE doesn't provide a feature set. Four of these have been manually corrected: in the feature-set listings, <em>ã̟ĩ</em>, <em>mːʷˠ</em>, <em>pːʷˠ</em>, and <em>ŋːʷ</em> have been changed to <em>ã̟ĩ</em>, <em>mʷˠː</em>, <em>pʷˠː</em>, and <em>ŋʷː</em>, to match the equivalent segments listed for languages. These segments appear in, respectively: KIOWA (UPSID); Satawalese (PH); Satawalese (PH); and Panamint (PH). The six others, which are currently unsearchable, are: <em>ˀnʘ</em>, <em>ˀnǁ</em>, <em>ˀnǀ</em>, <em>ˀnǃ</em>, and <em>ˀnǂ</em>, all of which appear only in !Xóõ (GM), and <em>N</em>, which appears in Ika (SAPHON), Asháninka (SAPHON), Caquinte (SAPHON), Nanti (SAPHON), Ashéninka (Ucayali-Yurúa dialect) (SAPHON), Ashéninka (Apurucayali dialect) (SAPHON), Ashéninka (Pichis dialect) (SAPHON), Matsigenka (SAPHON), Nomatsigenga (SAPHON), and Ashéninka (Perené dialect) (SAPHON).
 </p>
 <p>
   There are 20 segments (after the aforementioned manual correction) that PHOIBLE provides a feature set for, but that don't appear in any language in PHOIBLE's database. These are as follows: <em>tʃ</em>, <em> dʒ</em>, <em> tʃʰ</em>, <em> tʃʼ</em>, <em> n̠d</em>, <em> ẽ̞ĩ</em>, <em> kʼʷ</em>, <em> ɨ̞̃</em>, <em> ã̟ĩ</em>, <em> qʼʷ</em>, <em> mːʷˠ</em>, <em> pːʷˠ</em>, <em> ĩẽ̞</em>, <em> kːʷ</em>, <em> ãõ̞ˤ</em>, <em> ŋːʷ</em>, <em> ẽ̞ũ</em>, <em> n̠t</em>, <em> cçʲ</em>, <em> æ̞̃</em>, <em> j̤</em>, <em> õ̞</em>, <em> ẽ̞</em>, <em> ṵ̃</em>. Segments that don't appear in any language in PHOIBLE's database are excluded from search results.
