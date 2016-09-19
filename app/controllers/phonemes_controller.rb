@@ -15,7 +15,6 @@ class PhonemesController < ApplicationController
       @contains = true
       query = contains_query
     else
-      throw "this isn't done yet" unless params[:number].empty? && params[:number_or].empty?
       @contains = false
       query = does_not_contain_query
     end
@@ -25,7 +24,6 @@ class PhonemesController < ApplicationController
     @result = Hash.new { |h, k| h[k] = [] }
     curr_lang = nil
     search.each do |item|
-      p item
       lang_hash = item.slice("language_id", "language_name", "language_code", "source")
       curr_lang = lang_hash if lang_hash != curr_lang
       @result[curr_lang] << item.slice("phoneme_id", "phoneme")
@@ -87,7 +85,7 @@ class PhonemesController < ApplicationController
             #{segment_conditions}
           GROUP BY
             languages.id
-            #{number_conditions}
+          #{number_conditions}
         ) a 
       WHERE 
         a.language_id = language_phonemes.language_id AND 
@@ -116,6 +114,7 @@ class PhonemesController < ApplicationController
             l1.id = l2.id
           GROUP BY 
             l2.id 
+          #{number_conditions}
         )
       ;
     SQL
