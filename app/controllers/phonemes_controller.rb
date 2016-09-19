@@ -4,40 +4,21 @@ class PhonemesController < ApplicationController
 	end
 
 	def show
-		@phoneme = Phoneme.find(params[:id]).includes(:languages)
+		@phoneme = Phoneme.includes(:languages).find(params[:id])
 	end
 
 	def home
 	end
 
 	def search
-    query = <<-SQL
-      SELECT 
-        p.id AS phoneme_id, p.phoneme, a.* 
-      FROM 
-        phonemes AS p
-        JOIN language_phonemes ON p.id = language_phonemes.phoneme_id 
-        JOIN languages ON language_phonemes.language_id = languages.id 
-        JOIN segments ON p.phoneme = segments.segment, 
-        (
-          SELECT 
-            languages.id AS language_id, languages.language_name, languages.language_code, languages.source
-          FROM 
-            languages
-            JOIN language_phonemes ON languages.id = language_phonemes.language_id 
-            JOIN phonemes ON phonemes.id = language_phonemes.phoneme_id 
-            JOIN segments ON phonemes.phoneme = segments.segment
-          WHERE 
-            #{segment_conditions}
-          GROUP BY
-            languages.id
-            #{number_conditions}
-        ) a 
-      WHERE 
-        a.language_id = language_phonemes.language_id AND 
-        #{segment_conditions}
-      ;
-    SQL
+    if params[:contains].empty?
+      @contains = true
+      query = contains_query
+    else
+      throw "this isn't done yet" unless params[:number].empty? && params[:number_or].empty?
+      @contains = false
+      query = does_not_contain_query
+    end
 
     search = ActiveRecord::Base.connection.execute(query)
 
@@ -78,15 +59,65 @@ class PhonemesController < ApplicationController
 
   def number_conditions
     number_params = params.permit([:contains, :number, :number_or])
-    # :contains  - nil = contains, 'donotcontain'
-    # :number    - nil = any, 1..10 = 1..10
-    # :number_or - nil = number of, or less = '<=', or more = '>='
     if number_params.all? { |k, v| v.empty? }
       return ""
-    elsif number_params[:contains].empty? 
+    else 
       return "HAVING count(*) #{params[:number_or].empty? ? '=' : params[:number_or]} #{params[:number]}"
-    elsif number_params[:contains]
-      throw "this isn't done yet"
     end
+  end
+
+  def contains_query
+    <<-SQL
+      SELECT 
+        phonemes.id AS phoneme_id, phonemes.phoneme, a.* 
+      FROM 
+        phonemes
+        JOIN language_phonemes ON phonemes.id = language_phonemes.phoneme_id 
+        JOIN languages ON language_phonemes.language_id = languages.id 
+        JOIN segments ON phonemes.phoneme = segments.segment, 
+        (
+          SELECT 
+            languages.id AS language_id, languages.language_name, languages.language_code, languages.source
+          FROM 
+            languages
+            JOIN language_phonemes ON languages.id = language_phonemes.language_id 
+            JOIN phonemes ON phonemes.id = language_phonemes.phoneme_id 
+            JOIN segments ON phonemes.phoneme = segments.segment
+          WHERE 
+            #{segment_conditions}
+          GROUP BY
+            languages.id
+            #{number_conditions}
+        ) a 
+      WHERE 
+        a.language_id = language_phonemes.language_id AND 
+        #{segment_conditions}
+      ;
+    SQL
+  end
+
+  def does_not_contain_query
+    <<-SQL
+      SELECT 
+        l1.id AS language_id, l1.*
+      FROM
+        languages AS l1
+      WHERE 
+        NOT EXISTS (
+          SELECT 
+            l2.* 
+          FROM 
+            languages AS l2
+            JOIN language_phonemes ON l2.id = language_phonemes.language_id 
+            JOIN phonemes ON phonemes.id = language_phonemes.phoneme_id 
+            JOIN segments ON phonemes.phoneme = segments.segment 
+          WHERE 
+            #{segment_conditions} AND
+            l1.id = l2.id
+          GROUP BY 
+            l2.id 
+        )
+      ;
+    SQL
   end
 end

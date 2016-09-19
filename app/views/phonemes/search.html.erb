@@ -4,17 +4,21 @@
 		<tr>
 			<th>Language code</th>
 			<th>Language name</th>
-			<th>Phonemes</th>
+			<% if @contains %>
+				<th>Phonemes</th>
+			<% end %>
 		</tr>
 		<% @result.each do |language, phonemes| %>
 			<tr>
 				<td><%= language["language_code"] %></td>
 				<td><%= link_to "#{language['language_name']} (#{language['source']})", language_url(language["language_id"]) %></td>
-				<td>
-					<% phonemes.each do |phoneme| %>
-						<%= link_to phoneme["phoneme"], phoneme_url(phoneme["phoneme_id"]) %>
-					<% end %>
-				</td>
+				<% if @contains %>
+					<td>
+						<% phonemes.each do |phoneme| %>
+							<%= link_to phoneme["phoneme"], phoneme_url(phoneme["phoneme_id"]) %>
+						<% end %>
+					</td>
+				<% end %>
 			</tr>
 		<% end %>
 	</table>
