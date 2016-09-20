@@ -48,13 +48,8 @@ class PhonemesController < ApplicationController
 
     segment_conditions_arr = []
     segment_params.each do |k, v|
-      if v == "true"
-        segment_conditions_arr << "segments.#{k} = '+'"
-      elsif v == "false"
-        segment_conditions_arr << "segments.#{k} = '-'"
-      end
+        segment_conditions_arr << "segments.#{k} = '#{v}'"
     end
-    p segment_conditions_arr
     segment_conditions_arr.join(" AND ")
   end
 
