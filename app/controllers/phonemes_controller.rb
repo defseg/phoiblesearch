@@ -4,7 +4,7 @@ class PhonemesController < ApplicationController
 	end
 
 	def show
-		@phoneme = Phoneme.includes(:languages).find(params[:id])
+		@phoneme = Phoneme.includes(:languages).includes(:segment).find(params[:id])
 	end
 
 	def home

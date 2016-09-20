@@ -7,3 +7,19 @@
 		</li>
 	<% end %>
 </ul>
+
+<p>Features:
+	<table>
+		<% @phoneme.segment.attributes.each do |k, v| %>
+			<% next if k == "id" || k == "segment" %>
+			<tr>
+				<td>
+					<%= k.gsub("_"," ") %>
+				</td>
+				<td>
+					<%= v.nil? ? "nil" : v %>
+				</td>
+			</tr> 
+		<% end %>
+	</table>
+</p>
