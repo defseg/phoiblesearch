@@ -19,6 +19,8 @@ class PhonemesController < ApplicationController
       query = does_not_contain_query
     end
 
+    p query
+
     search = ActiveRecord::Base.connection.execute(query)
 
     @result = Hash.new { |h, k| h[k] = [] }
@@ -41,7 +43,7 @@ class PhonemesController < ApplicationController
       :advanced_tongue_root, :periodic_glottal_source, 
       :epilaryngeal_source, :spread_glottis, :constricted_glottis, 
       :fortis, :ejective, :implosive, :click]).reject do |k, v|
-      v.empty? || ["contains", "number", "number_or"].include?(k)
+      v.empty?
     end
 
     segment_conditions_arr = []
@@ -52,6 +54,7 @@ class PhonemesController < ApplicationController
         segment_conditions_arr << "segments.#{k} = '-'"
       end
     end
+    p segment_conditions_arr
     segment_conditions_arr.join(" AND ")
   end
 
