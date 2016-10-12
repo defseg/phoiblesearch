@@ -1,0 +1,41 @@
+<p>
+	<h1>Languages</h1>
+	<table>
+		<tr>
+			<th>Language code</th>
+			<th>Language name</th>
+			<% if @contains %>
+				<th>Phonemes</th>
+			<% end %>
+		</tr>
+		<% @result.each do |language, phonemes| %>
+			<tr>
+				<td><%= language["language_code"] %></td>
+				<td><%= link_to "#{language['language_name']} (#{language['source']})", language_url(language["language_id"]) %></td>
+				<% if @contains %>
+					<td>
+						<% phonemes.each do |phoneme| %>
+							<%= link_to phoneme["phoneme"], phoneme_url(phoneme["phoneme_id"]) %>
+						<% end %>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	</table>
+</p>
+
+<p>
+	<h1>Phonemes</h1>
+	<table>
+		<tr>
+			<th>Phoneme</th>
+			<th>Count</th>
+		</tr>
+		<% @phonemes.each do |phoneme, count| %>
+			<tr>
+				<td><%= link_to phoneme[1], phoneme_url(phoneme[0]) %></td>
+				<td><%= count %></td>
+			</tr>
+		<% end %>
+	</table>
+</p>

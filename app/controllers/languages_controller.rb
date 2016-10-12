@@ -16,7 +16,10 @@ class LanguagesController < ApplicationController
     @code = params[:language_code]
   end
 
-    def search
+  def search
+  end
+
+  def search_results
     if params[:contains].empty?
       @contains = true
       query = contains_query
