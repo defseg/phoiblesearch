@@ -1,4 +1,4 @@
-<%= @phoneme.phoneme %> appears in <%= @phoneme.languages.count %> languages:
+<%= @phoneme.phoneme %> appears in <%= @phoneme.languages.count %> language<%= "s" unless @phoneme.languages.count == 1 %>:
 
 <ul>
 	<% @phoneme.languages.each do |language| %>

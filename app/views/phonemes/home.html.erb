@@ -1,4 +1,6 @@
-<%= form_tag({controller: "phonemes", action: "search"}, method: "get") do %>
+<%= link_to "Find a language", languages_url %>, or <%= link_to "find a phoneme", phonemes_url %>, or:
+
+<%= form_tag({controller: "languages", action: "search"}, method: "get") do %>
   <p>
   	Find languages that
   	<%= select_tag :contains,  options_for_select([['do contain', nil], ['do not contain', 'donotcontain']], nil) %>
@@ -15,6 +17,7 @@
     <%= select_param :consonantal,             "+", "-", "+,-", "-,+"                                               %>
     <%= select_param :sonorant,                "+", "-", "+,-", "-,+", "+,-,+", "+,-,-",                  "+,-,+,-" %>
     <%= select_param :continuant,              "+", "-", "+,-", "-,+",                   "-,+,+"                    %>
+    <%= select_param :delayed_release,         "+", "-", "+,-", "-,+"                                               %>
     <%= select_param :approximant,             "+", "-", "+,-", "-,+"                                               %>
     <%= select_param :tap,                     "+", "-",        "-,+"                                               %>
     <%= select_param :trill,                   "+", "-",        "-,+"                                               %>

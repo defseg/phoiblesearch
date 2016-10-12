@@ -1,5 +1,5 @@
 <p>
-	Languages:
+	<h1>Languages</h1>
 	<table>
 		<tr>
 			<th>Language code</th>
@@ -19,6 +19,22 @@
 						<% end %>
 					</td>
 				<% end %>
+			</tr>
+		<% end %>
+	</table>
+</p>
+
+<p>
+	<h1>Phonemes</h1>
+	<table>
+		<tr>
+			<th>Phoneme</th>
+			<th>Count</th>
+		</tr>
+		<% @phonemes.each do |phoneme, count| %>
+			<tr>
+				<td><%= link_to phoneme[1], phoneme_url(phoneme[0]) %></td>
+				<td><%= count %></td>
 			</tr>
 		<% end %>
 	</table>

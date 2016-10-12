@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  root to: 'phonemes#home'
+  root to: 'home#home'
   get '/languages' => 'languages#index', as: :languages
   get '/languages/:language_code' => 'languages#by_code', as: :language_by_code, constraints: { language_code: /[a-z]+/}
   get '/languages/:id' => 'languages#show', as: :language
-  get '/phonemes/search' => 'phonemes#search', as: :phoneme_search
+  get '/search' => 'phonemes#home', as: :search
+  get '/search_results' => 'languages#search', as: :language_search_results
   resources :phonemes, only: [:index, :show]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

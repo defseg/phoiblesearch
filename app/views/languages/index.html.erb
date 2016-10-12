@@ -11,7 +11,7 @@ There are <%= @language_count %> languages in the database.
         <%= language.language_code %>
       </td>
       <td>
-        <%= language.language_name %>
+        <%= link_to language.language_name, language_url(language) %>
       </td>
       <td>
         <%= language.source %>
