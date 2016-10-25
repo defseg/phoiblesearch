@@ -44,6 +44,26 @@ class LanguagesController < ApplicationController
     @phonemes = @phonemes.sort_by { |k, v| -v }
   end
 
+  def text_search
+  end
+
+  def text_search_results
+    # could just use find_by_sql but let's do it the correct way
+    phoneme_table  = Phoneme.arel_table
+    query          = params[:str].gsub(/[%_]/, '\\0')
+    match          = ->(param) { phoneme_table[param].matches("%#{query}%") }
+    @phonemes      = Phoneme.includes(:languages).where(match.(:phoneme))
+
+    @languages     = Hash.new { |h, k| h[k] = Array.new }
+    @phoneme_count = Hash.new(0)
+    @phonemes.each do |phoneme|
+      phoneme.languages.each do |language|
+        @languages[language].push(phoneme)
+        @phoneme_count[phoneme] += 1
+      end
+    end
+  end
+
   private
 
     def segment_conditions

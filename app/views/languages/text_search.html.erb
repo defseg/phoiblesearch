@@ -1,0 +1,15 @@
+<%= link_to "Find a language", languages_url %>, or <%= link_to "find a phoneme", phonemes_url %>, or:
+
+<%= form_tag({controller: "languages", action: "text_search_results"}, method: "get") do %>
+  <p>
+  	Find phonemes that contain the string:
+  </p>
+  <p>
+    <%= text_field_tag :str %>
+  </p>
+  <p>
+    <%= submit_tag "Search" %>
+  </p>
+
+  Note that PHOIBLE uses ɡ instead of g, and that diacritics have no consistent order.
+<% end %>

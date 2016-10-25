@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   root to: 'home#home'
+  get '/info' => 'home#info', as: :info
   get '/languages' => 'languages#index', as: :languages
+  get '/languages/text_search' => 'languages#text_search', as: :text_search
+  get '/languages/text_search_results' => 'languages#text_search_results', as: :text_search_results
   get '/languages/:language_code' => 'languages#by_code', as: :language_by_code, constraints: { language_code: /[a-z]+/}
   get '/languages/:id' => 'languages#show', as: :language
   get '/search' => 'languages#search', as: :search
