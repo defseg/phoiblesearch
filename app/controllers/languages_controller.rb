@@ -28,19 +28,21 @@ class LanguagesController < ApplicationController
       query = does_not_contain_query
     end
 
-    p query
-
     search = ActiveRecord::Base.connection.execute(query)
 
     @result = Hash.new { |h, k| h[k] = [] }
     @phonemes = Hash.new(0)
+    @lang_locs = []
     curr_lang = nil
     search.each do |item|
+      p item
       lang_hash = item.slice("language_id", "language_name", "language_code", "source")
       curr_lang = lang_hash if lang_hash != curr_lang
       @result[curr_lang] << item.slice("phoneme_id", "phoneme")
       @phonemes[[item["phoneme_id"], item["phoneme"]]] += 1
+      @lang_locs << [item["latitude"].gsub(':','.').to_f, item["longitude"].gsub(':','.').to_f]
     end
+    @result = @result.sort_by { |k, v| k["language_code"] }
     @phonemes = @phonemes.sort_by { |k, v| -v }
   end
 
@@ -105,7 +107,8 @@ class LanguagesController < ApplicationController
           JOIN segments ON phonemes.phoneme = segments.segment, 
           (
             SELECT 
-              languages.id AS language_id, languages.language_name, languages.language_code, languages.source
+              languages.id AS language_id, languages.language_name, languages.language_code, 
+              languages.source, languages.latitude, languages.longitude
             FROM 
               languages
               JOIN language_phonemes ON languages.id = language_phonemes.language_id 

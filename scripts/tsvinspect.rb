@@ -17,7 +17,7 @@ headers_hash.keys.each do |header|
       puts "  Too many values to list; an example is #{headers_hash[header].keys.sample}"
       next
     end
-  headers_hash[header].keys.each do |value|
+  headers_hash[header].keys.sort.each do |value|
     puts "  #{value.chomp}: #{headers_hash[header][value]}"
   end
 end

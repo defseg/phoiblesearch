@@ -1,3 +1,28 @@
+<div id="mapid"></div>
+<script>
+	var lmap = L.map('mapid').setView([0, 0], 1);
+
+	L.tileLayer('https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=<%=ENV["THUNDERFOREST_API_KEY"]%>', {
+    	attribution: 'Thunderforest',
+    	maxZoom: 18,
+    	id: '',
+    	accessToken: '<%=ENV["THUNDERFOREST_API_KEY"]%>'
+	}).addTo(lmap);
+
+	// custom icon type to allow customization of icon graphic
+	var licon = L.icon({
+		iconUrl: "<%= asset_path 'marker-icon.png' %>", 
+		shadowUrl: "<%= asset_path 'marker-shadow.png' %>",
+		iconAnchor: [12, 40]
+	});
+
+	var langLocs = <%= @lang_locs %>
+	langLocs.forEach(function (langLoc) {
+		console.log(langLoc);
+		var marker = L.marker(langLoc, {icon: licon}).addTo(lmap);
+	});
+</script>
+
 <p>
 	<h1>Languages</h1>
 	<table>
