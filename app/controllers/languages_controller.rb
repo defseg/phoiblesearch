@@ -22,18 +22,18 @@ class LanguagesController < ApplicationController
   def search_results
     if params[:contains].empty?
       @contains = true
-      query = contains_query
+      query     = contains_query
     else
       @contains = false
-      query = does_not_contain_query
+      query     = does_not_contain_query
     end
 
     search = ActiveRecord::Base.connection.execute(query)
 
-    @result = Hash.new { |h, k| h[k] = [] }
-    @phonemes = Hash.new(0)
+    @result    = Hash.new { |h, k| h[k] = [] }
+    @phonemes  = Hash.new(0)
     @lang_locs = []
-    curr_lang = nil
+    curr_lang  = nil
     search.each do |item|
       p item
       lang_hash = item.slice("language_id", "language_name", "language_code", "source")
@@ -64,6 +64,8 @@ class LanguagesController < ApplicationController
         @phoneme_count[phoneme] += 1
       end
     end
+    @lang_locs     = []
+    @languages.keys.each { |language| @lang_locs.push(language.location) }
   end
 
   private

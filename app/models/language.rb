@@ -5,4 +5,8 @@ class Language < ActiveRecord::Base
 	def name_and_source
 		"#{self.language_name} (#{self.source})"
 	end
+
+	def location
+		[self.latitude.gsub(':','.').to_f, self.longitude.gsub(':','.').to_f]
+	end
 end
