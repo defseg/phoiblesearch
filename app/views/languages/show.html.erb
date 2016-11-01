@@ -2,7 +2,7 @@
 
 <div id="mapid"></div>
 <script>
-	var lmap = L.map('mapid').setView([<%= @language.latitude.gsub(':','.') %>, <%= @language.longitude.gsub(':','.') %>], 5);
+	var lmap = L.map('mapid').setView([<%= @language.latitude %>, <%= @language.longitude %>], 5);
 
 	L.tileLayer('https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=<%=ENV["THUNDERFOREST_API_KEY"]%>', {
     	attribution: 'Thunderforest',
@@ -18,7 +18,7 @@
 		iconAnchor: [12, 40]
 	});
 
-	var marker = L.marker([<%= @language.latitude.gsub(':','.') %>, <%= @language.longitude.gsub(':','.') %>],
+	var marker = L.marker([<%= @language.latitude %>, <%= @language.longitude %>],
 		{icon: licon}).addTo(lmap);
 </script>
 

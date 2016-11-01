@@ -7,6 +7,6 @@ class Language < ActiveRecord::Base
 	end
 
 	def location
-		[self.latitude.gsub(':','.').to_f, self.longitude.gsub(':','.').to_f]
+		[self.latitude, self.longitude]
 	end
 end
