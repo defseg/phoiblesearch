@@ -63,7 +63,13 @@ class LanguagesController < ApplicationController
         @phoneme_count[phoneme] += 1
       end
     end
-    @result_json = @languages.to_json
+    
+    # TODO this could be less ugly
+    @result_json = []
+    @languages.each do |language, phonemes|
+      @result_json << [language, phonemes]
+    end
+    @result_json = @result_json.to_json
   end
 
   private

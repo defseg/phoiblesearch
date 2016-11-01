@@ -16,10 +16,21 @@
 		iconAnchor: [12, 40]
 	});
 
-	var langLocs = <%= @lang_locs %>
-	langLocs.forEach(function (langLoc) {
-		console.log(langLoc);
-		var marker = L.marker(langLoc, {icon: licon}).addTo(lmap);
+	var langJSON = <%= @result_json.html_safe %>
+	langJSON.forEach(function (langEntry) {
+		// [{language}, [{phoneme}, {phoneme}...]]
+		var lang = langEntry[0];
+		if (!lang.latitude || !lang.longitude) {
+			return;
+		} // some languages don't have location data
+		var marker = L.marker([lang.latitude, lang.longitude], {icon: licon}).addTo(lmap);
+		// build list of phonemes
+		var phonemeList = "";
+		langEntry[1].forEach(function (phoneme) {
+			phonemeList = phonemeList + phoneme.phoneme + " ";
+		});
+		marker.bindPopup(lang.language_name + " (" + lang.source + "):<br>" + phonemeList, 
+			{offset: [1,-20]});
 	});
 </script>
 
