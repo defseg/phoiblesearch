@@ -24,8 +24,8 @@ tsv.parse do |row|
   language = Language.find(row["InventoryID"])
 
   # manually correct malformed/exceptional data
-  row["Latitude"]  = nil if row["Latitude"]  == "NULL"
-  row["Longitude"] = nil if row["Longitude"] == "NULL"
+  row["Latitude"]  = (row["Latitude"] == "NULL" ? nil : row["Latitude"].gsub(':','.').to_f)
+  row["Longitude"] = (row["Longitude"] == "NULL" ? nil : row["Longitude"].gsub(':','.').to_f)
   row["Population"] = row["Population"].gsub(",","").to_i
 
   language.update_attributes(row.process(props))

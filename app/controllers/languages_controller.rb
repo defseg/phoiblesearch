@@ -32,18 +32,17 @@ class LanguagesController < ApplicationController
 
     @result    = Hash.new { |h, k| h[k] = [] }
     @phonemes  = Hash.new(0)
-    @lang_locs = []
     curr_lang  = nil
     search.each do |item|
       p item
-      lang_hash = item.slice("language_id", "language_name", "language_code", "source")
+      lang_hash = item.slice("language_id", "language_name", "language_code", "source", "latitude", "longitude")
       curr_lang = lang_hash if lang_hash != curr_lang
       @result[curr_lang] << item.slice("phoneme_id", "phoneme")
       @phonemes[[item["phoneme_id"], item["phoneme"]]] += 1
-      @lang_locs << [item["latitude"].gsub(':','.').to_f, item["longitude"].gsub(':','.').to_f]
     end
-    @result = @result.sort_by { |k, v| k["language_code"] }
-    @phonemes = @phonemes.sort_by { |k, v| -v }
+    @result      = @result.sort_by { |k, v| k["language_code"] }
+    @phonemes    = @phonemes.sort_by { |k, v| -v }
+    @result_json = @result.to_json # this is ugly, but it works
   end
 
   def text_search
@@ -64,8 +63,7 @@ class LanguagesController < ApplicationController
         @phoneme_count[phoneme] += 1
       end
     end
-    @lang_locs     = []
-    @languages.keys.each { |language| @lang_locs.push(language.location) }
+    @result_json = @languages.to_json
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161030220545) do
+ActiveRecord::Schema.define(version: 20161031230702) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,13 +30,13 @@ ActiveRecord::Schema.define(version: 20161030220545) do
     t.string  "language_name",         null: false
     t.integer "trump",                 null: false
     t.string  "canonical_name"
-    t.string  "latitude"
-    t.string  "longitude"
     t.string  "language_family_root"
     t.string  "language_family_genus"
     t.string  "country"
     t.string  "area"
     t.integer "population"
+    t.float   "latitude"
+    t.float   "longitude"
   end
 
   create_table "phonemes", force: :cascade do |t|
