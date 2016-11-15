@@ -1,3 +1,35 @@
+<div id="mapid"></div>
+<script>
+	var lmap = L.map('mapid').setView([0, 0], 1);
+
+	L.tileLayer('https://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=<%=ENV["THUNDERFOREST_API_KEY"]%>', {
+    	attribution: 'Thunderforest',
+    	maxZoom: 18,
+    	id: '',
+    	accessToken: '<%=ENV["THUNDERFOREST_API_KEY"]%>'
+	}).addTo(lmap);
+
+	// custom icon type to allow customization of icon graphic
+	var licon = L.icon({
+		iconUrl: "<%= asset_path 'marker-icon.png' %>", 
+		shadowUrl: "<%= asset_path 'marker-shadow.png' %>",
+		iconAnchor: [12, 40]
+	});
+
+	var langJSON = <%= @result_json.html_safe %>
+	langJSON.forEach(function (lang) {
+		// [{language}, {language}, ...]
+		if (!lang.latitude || !lang.longitude) {
+			return;
+		} // some languages don't have location data
+		var marker = L.marker([lang.latitude, lang.longitude], {icon: licon}).addTo(lmap);
+		// build list of phonemes
+		var phonemeList = "";
+		marker.bindPopup(lang.language_name, 
+			{offset: [1,-20]});
+	});
+</script>
+
 <%= @phoneme.phoneme %> appears in <%= @phoneme.languages.count %> language<%= "s" unless @phoneme.languages.count == 1 %>:
 
 <ul>

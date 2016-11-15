@@ -26,9 +26,6 @@
 		var marker = L.marker([lang.latitude, lang.longitude], {icon: licon}).addTo(lmap);
 		// build list of phonemes
 		var phonemeList = "";
-		langEntry[1].forEach(function (phoneme) {
-			phonemeList = phonemeList + phoneme.phoneme + " ";
-		});
 		marker.bindPopup(lang.language_name + " (" + lang.source + "):<br>" + phonemeList, 
 			{offset: [1,-20]});
 	});
